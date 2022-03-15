@@ -1,0 +1,19 @@
+{
+    "admin_server_host": "c2219-node1.squadron.support.hortonworks.com",
+    "case_insensitive_username_rules": "false",
+    "encryption_types": "aes des3-cbc-sha1 rc4 des-cbc-md5",
+    "executable_search_paths": "/usr/bin, /usr/kerberos/bin, /usr/sbin, /usr/lib/mit/bin, /usr/lib/mit/sbin",
+    "install_packages": "true",
+    "kdc_host": "c2219-node1.squadron.support.hortonworks.com",
+    "kdc_hosts": "c2219-node1.squadron.support.hortonworks.com",
+    "kdc_type": "mit-kdc",
+    "manage_identities": "true",
+    "password_length": "20",
+    "password_min_digits": "1",
+    "password_min_lowercase_letters": "1",
+    "password_min_punctuation": "1",
+    "password_min_uppercase_letters": "1",
+    "password_min_whitespace": "0",
+    "realm": "SQUADRON.SUPPORT.HORTONWORKS.COM",
+    "service_check_principal_name": "-"
+}

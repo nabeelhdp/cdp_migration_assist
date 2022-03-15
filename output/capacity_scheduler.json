@@ -1,0 +1,22 @@
+{
+    "yarn.scheduler.capacity.default.minimum-user-limit-percent": "100",
+    "yarn.scheduler.capacity.maximum-am-resource-percent": "0.2",
+    "yarn.scheduler.capacity.maximum-applications": "10000",
+    "yarn.scheduler.capacity.node-locality-delay": "40",
+    "yarn.scheduler.capacity.resource-calculator": "org.apache.hadoop.yarn.util.resource.DefaultResourceCalculator",
+    "yarn.scheduler.capacity.root.accessible-node-labels": "*",
+    "yarn.scheduler.capacity.root.acl_administer_queue": "yarn,hive",
+    "yarn.scheduler.capacity.root.acl_submit_applications": "yarn,ambari-qa",
+    "yarn.scheduler.capacity.root.capacity": "100",
+    "yarn.scheduler.capacity.root.default.acl_administer_jobs": "yarn",
+    "yarn.scheduler.capacity.root.default.acl_administer_queue": "yarn",
+    "yarn.scheduler.capacity.root.default.acl_submit_applications": "yarn,yarn-ats",
+    "yarn.scheduler.capacity.root.default.capacity": "100",
+    "yarn.scheduler.capacity.root.default.maximum-capacity": "100",
+    "yarn.scheduler.capacity.root.default.state": "RUNNING",
+    "yarn.scheduler.capacity.root.default.user-limit-factor": "1",
+    "yarn.scheduler.capacity.root.queues": "default",
+    "yarn.scheduler.capacity.schedule-asynchronously.enable": "true",
+    "yarn.scheduler.capacity.schedule-asynchronously.maximum-threads": "1",
+    "yarn.scheduler.capacity.schedule-asynchronously.scheduling-interval-ms": "10"
+}

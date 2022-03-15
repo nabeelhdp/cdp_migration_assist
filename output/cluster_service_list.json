@@ -1,0 +1,13 @@
+{
+    "c2219": [
+        "AMBARI_METRICS",
+        "HBASE",
+        "HDFS",
+        "HIVE",
+        "KERBEROS",
+        "MAPREDUCE2",
+        "TEZ",
+        "YARN",
+        "ZOOKEEPER"
+    ]
+}

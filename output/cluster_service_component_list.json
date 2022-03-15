@@ -1,0 +1,47 @@
+{
+    "AMBARI_METRICS": [
+        "METRICS_COLLECTOR",
+        "METRICS_GRAFANA",
+        "METRICS_MONITOR"
+    ],
+    "HBASE": [
+        "HBASE_CLIENT",
+        "HBASE_MASTER",
+        "HBASE_REGIONSERVER",
+        "PHOENIX_QUERY_SERVER"
+    ],
+    "HDFS": [
+        "DATANODE",
+        "HDFS_CLIENT",
+        "NAMENODE",
+        "SECONDARY_NAMENODE"
+    ],
+    "HIVE": [
+        "HIVE_CLIENT",
+        "HIVE_METASTORE",
+        "HIVE_SERVER",
+        "HIVE_SERVER_INTERACTIVE",
+        "MYSQL_SERVER"
+    ],
+    "KERBEROS": [
+        "KERBEROS_CLIENT"
+    ],
+    "MAPREDUCE2": [
+        "HISTORYSERVER",
+        "MAPREDUCE2_CLIENT"
+    ],
+    "TEZ": [
+        "TEZ_CLIENT"
+    ],
+    "YARN": [
+        "APP_TIMELINE_SERVER",
+        "NODEMANAGER",
+        "RESOURCEMANAGER",
+        "TIMELINE_READER",
+        "YARN_CLIENT"
+    ],
+    "ZOOKEEPER": [
+        "ZOOKEEPER_CLIENT",
+        "ZOOKEEPER_SERVER"
+    ]
+}
