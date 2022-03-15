@@ -83,11 +83,23 @@ class AmbariApiExtractor:
         log.debug("Read host list.")
         hosts_list_api_response = self.send_ambari_request("/hosts")
         hosts_dict = {}
+        hosts_components_dict = {}
         hosts_dict[self.cluster_name]=[]
         for host_name in hosts_list_api_response['items']:
             hosts_dict[self.cluster_name].append(host_name['Hosts']['host_name'])
         dump_json(os.path.join(self.api_output_dir, "cluster_hosts.json"), hosts_dict)
         self.host_list = hosts_dict[self.cluster_name]
+
+        for x in range(len(self.host_list)):
+            host_components_api_response_raw = self.send_ambari_request("/hosts/" + self.host_list[x])
+            for y in range(len(host_components_api_response_raw['host_components'])):
+                try:
+                    hosts_components_dict[self.host_list[x]].append(host_components_api_response_raw['host_components'][y]['HostRoles']['component_name'])
+                except KeyError as e:
+                    hosts_components_dict[self.host_list[x]] = []
+                    hosts_components_dict[self.host_list[x]].append(host_components_api_response_raw['host_components'][y]['HostRoles']['component_name'])
+        dump_json(os.path.join(self.api_output_dir, "host_component_list.json"), hosts_components_dict)
+
 
     def collect_yarn_info(self):
         log.debug("Read yarn information.")
@@ -113,7 +125,6 @@ class AmbariApiExtractor:
         service_list_api_response_raw = self.send_ambari_request("/services/")
         service_dict = {}
         service_component_dict = {}
-
         service_dict[self.cluster_name] = []
 
         for x in service_list_api_response_raw.items():
@@ -122,7 +133,7 @@ class AmbariApiExtractor:
                     self.service_list.append(x[1][y]['ServiceInfo']['service_name'])
         for x in range(len(self.service_list)):
             service_dict[self.cluster_name].append(self.service_list[x])
-        dump_json(os.path.join(self.api_output_dir, "cluster_service_list.json"), service_dict)
+        dump_json(os.path.join(self.api_output_dir, "services_list.json"), service_dict)
 
         for x in range(len(self.service_list)):
             service_components_api_response_raw = self.send_ambari_request("/services/" + self.service_list[x])
@@ -132,7 +143,7 @@ class AmbariApiExtractor:
                 except KeyError as e:
                     service_component_dict[y['ServiceComponentInfo']['service_name']]=[]
                     service_component_dict[y['ServiceComponentInfo']['service_name']].append(y['ServiceComponentInfo']['component_name'])
-        dump_json(os.path.join(self.api_output_dir, "cluster_service_component_list.json"), service_component_dict)
+        dump_json(os.path.join(self.api_output_dir, "service_components_list.json"), service_component_dict)
 
 
 
