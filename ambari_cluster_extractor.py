@@ -11,7 +11,7 @@ log = logging.getLogger('main')
 
 def dump_json(path, api_response):
     f = open(path, "w")
-    f.write(json.dumps(api_response))
+    f.write(json.dumps(api_response, indent=4, sort_keys=True))
     log.debug(f"Api response stored in: {path}")
 
 
@@ -38,6 +38,7 @@ class AmbariApiExtractor:
         self.collect_hosts()
         self.collect_hosts_cpu_mem()
         self.collect_service_info()
+        self.collect_yarn_info()
         self.collect_kerberos_info()
 
     # Print response from the Ambari server
@@ -85,11 +86,11 @@ class AmbariApiExtractor:
         hosts_dict[self.cluster_name]=[]
         for host_name in hosts_list_api_response['items']:
             hosts_dict[self.cluster_name].append(host_name['Hosts']['host_name'])
-        dump_json(os.path.join(self.api_output_dir, "read_hosts.json"), hosts_dict)
+        dump_json(os.path.join(self.api_output_dir, "cluster_hosts.json"), hosts_dict)
         self.host_list = hosts_dict[self.cluster_name]
 
-    def collect_service_info(self):
-        log.debug("Read service information.")
+    def collect_yarn_info(self):
+        log.debug("Read yarn information.")
         yarn_info_api_response = self.send_ambari_request("/services/YARN/components/NODEMANAGER")
         yarn_info = {}
         #yarn_info['AvailableVCores'] = yarn_info_api_response['metrics']['yarn']['Queue']['root']['AvailableVCores']
@@ -105,6 +106,35 @@ class AmbariApiExtractor:
                             capacity_scheduler = x[1][y]['properties']
         dump_json(os.path.join(self.api_output_dir, "yarn_info.json"), yarn_info)
         dump_json(os.path.join(self.api_output_dir, "capacity_scheduler.json"), capacity_scheduler)
+
+
+    def collect_service_info(self):
+        log.debug("Read service layout.")
+        service_list_api_response_raw = self.send_ambari_request("/services/")
+        service_dict = {}
+        service_component_dict = {}
+
+        service_dict[self.cluster_name] = []
+
+        for x in service_list_api_response_raw.items():
+            if x[0] == "items":
+                for y in range(len(x[1])):
+                    self.service_list.append(x[1][y]['ServiceInfo']['service_name'])
+        for x in range(len(self.service_list)):
+            service_dict[self.cluster_name].append(self.service_list[x])
+        dump_json(os.path.join(self.api_output_dir, "cluster_service_list.json"), service_dict)
+
+        for x in range(len(self.service_list)):
+            service_components_api_response_raw = self.send_ambari_request("/services/" + self.service_list[x])
+            for y in service_components_api_response_raw['components']:
+                try:
+                    service_component_dict[y['ServiceComponentInfo']['service_name']].append(y['ServiceComponentInfo']['component_name'])
+                except KeyError as e:
+                    service_component_dict[y['ServiceComponentInfo']['service_name']]=[]
+                    service_component_dict[y['ServiceComponentInfo']['service_name']].append(y['ServiceComponentInfo']['component_name'])
+        dump_json(os.path.join(self.api_output_dir, "cluster_service_component_list.json"), service_component_dict)
+
+
 
     def collect_hosts_cpu_mem(self):
         log.debug("Read host information.")
@@ -124,10 +154,13 @@ class AmbariApiExtractor:
             host_operating_system[host_entry] = hosts_list_api_response['Hosts']['os_type'] + " " + hosts_list_api_response['Hosts']['os_arch']
             try:
                 hdfs_disk_space_response = self.send_ambari_request("/hosts/" + host_entry + "/host_components/DATANODE")
-                #log.debug(hdfs_disk_space_response)
                 hdfs_disk_space[host_entry] = hdfs_disk_space_response['metrics']['dfs']['FSDatasetState']['Capacity']
-            except TypeError as e:
+            except TypeError :
                 pass
+                #log.debug(hdfs_disk_space_response)
+            except KeyError :
+                pass
+                #log.debug(hdfs_disk_space_response['metrics']['dfs'])
 
         dump_json(os.path.join(self.api_output_dir, "hosts_memory.json"), total_mem)
         dump_json(os.path.join(self.api_output_dir, "hosts_vcores.json"), total_vcpu)
