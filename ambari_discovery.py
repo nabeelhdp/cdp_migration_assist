@@ -6,14 +6,12 @@ import re
 import sys
 from threading import Thread
 import connectionchecks
-
-import urllib3
 import yaml
 
 from ambari_cluster_extractor import AmbariApiExtractor
 
 root_path = os.path.dirname(os.path.realpath(__file__))
-with open(os.path.join(root_path, '../conf', 'log-config.yaml'), 'r') as stream:
+with open(os.path.join(root_path, 'conf', 'log-config.yaml'), 'r') as stream:
     config = yaml.load(stream, Loader=yaml.FullLoader)
     log_path = config['handlers']['file']['filename']
     config['handlers']['file']['filename'] = os.path.join(root_path, log_path)
@@ -83,7 +81,7 @@ if __name__ == '__main__':
     threads = []
 
     #ambari_conf = {}
-    ambari_conf = get_config_params(os.path.join(root_path, '../conf', 'config.ini'))
+    ambari_conf = get_config_params(os.path.join(root_path, 'conf', 'config.ini'))
 
     # TODO: Add options for module choices
     module='all'

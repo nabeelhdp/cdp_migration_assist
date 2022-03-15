@@ -1,0 +1,60 @@
+{
+    "c2219-node1.squadron.support.hortonworks.com": [
+        "KERBEROS_CLIENT"
+    ],
+    "c2219-node2.squadron.support.hortonworks.com": [
+        "APP_TIMELINE_SERVER",
+        "DATANODE",
+        "HBASE_CLIENT",
+        "HBASE_MASTER",
+        "HDFS_CLIENT",
+        "HISTORYSERVER",
+        "HIVE_CLIENT",
+        "KERBEROS_CLIENT",
+        "MAPREDUCE2_CLIENT",
+        "METRICS_GRAFANA",
+        "METRICS_MONITOR",
+        "NAMENODE",
+        "NODEMANAGER",
+        "RESOURCEMANAGER",
+        "TEZ_CLIENT",
+        "TIMELINE_READER",
+        "YARN_CLIENT",
+        "ZOOKEEPER_CLIENT",
+        "ZOOKEEPER_SERVER"
+    ],
+    "c2219-node3.squadron.support.hortonworks.com": [
+        "DATANODE",
+        "HBASE_CLIENT",
+        "HDFS_CLIENT",
+        "HIVE_CLIENT",
+        "HIVE_METASTORE",
+        "HIVE_SERVER",
+        "KERBEROS_CLIENT",
+        "MAPREDUCE2_CLIENT",
+        "METRICS_MONITOR",
+        "MYSQL_SERVER",
+        "NODEMANAGER",
+        "SECONDARY_NAMENODE",
+        "TEZ_CLIENT",
+        "YARN_CLIENT",
+        "ZOOKEEPER_CLIENT",
+        "ZOOKEEPER_SERVER"
+    ],
+    "c2219-node4.squadron.support.hortonworks.com": [
+        "DATANODE",
+        "HBASE_CLIENT",
+        "HBASE_REGIONSERVER",
+        "HDFS_CLIENT",
+        "HIVE_CLIENT",
+        "KERBEROS_CLIENT",
+        "MAPREDUCE2_CLIENT",
+        "METRICS_COLLECTOR",
+        "METRICS_MONITOR",
+        "NODEMANAGER",
+        "TEZ_CLIENT",
+        "YARN_CLIENT",
+        "ZOOKEEPER_CLIENT",
+        "ZOOKEEPER_SERVER"
+    ]
+}
